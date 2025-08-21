@@ -142,7 +142,7 @@ export async function fetchInvoicesPages(query: string) {
   }
 }
 
-export async function fetchInvoiceById(id: string): Promise<InvoiceForm[]> {
+export async function fetchInvoiceById(id: string): Promise<InvoiceForm | null> {
   try {
     const data = await sql`
       SELECT
@@ -160,7 +160,7 @@ export async function fetchInvoiceById(id: string): Promise<InvoiceForm[]> {
       amount: invoice.amount / 100,
     }));
     console.log(invoice);
-    return invoice[0] as InvoiceForm[];
+    return invoice[0] ?? null;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch invoice.');
